@@ -1,0 +1,202 @@
+.usergroups {
+  position: relative;
+    width: 100%;
+    height: calc(100dvh - 80px);
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    overflow: auto;
+  
+    .takashima {
+      background-image: url("/takashima.jpg");
+      position: fixed;
+      top: 80px;
+      left: 0;
+      width: 100dvw;
+      height: calc(100dvh - 80px);
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+      opacity: .1;
+      animation-name: shake-crazy;
+      animation-duration: 1000ms;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+  
+    .download {
+      width: 95%;
+      margin: 2rem auto 1rem;
+  
+      button {
+        border: none;
+        border-radius: 3px;
+        background-color: #734cff;
+        color: #fff;
+        padding: .5rem 1rem;
+        cursor: pointer;
+        transition: .2s;
+  
+        &:hover {
+          background-color: #5c3aff;
+        }
+      }
+    }
+
+    .special {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      button {
+        font-size: 8px;
+        padding: 5px 10px;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        background-image: linear-gradient(150deg, rgba(247, 166, 12, 1) 10%, rgba(255, 34, 87, 1) 40%, rgba(154, 39, 238, 1) 68%, rgba(35, 102, 247, 1) 90%);
+        transition: .3s;
+        
+        &:hover {
+          opacity: .8;
+        }
+      }
+    }
+  
+    table {
+      border-collapse: collapse;
+      color: #3c4041;
+      width: 95%;
+      margin: 1rem auto;
+  
+      th {
+        font-size: 1.2rem;
+        letter-spacing: .1rem;
+        background-color: #3c4041;
+        color: #fff;
+        padding: .6rem .3rem;
+        border: 1px solid #3c4041;
+        border-bottom: solid 1px #dfe6e9;
+  
+        &:not(:last-child) {
+          border-right: solid 1px #dfe6e9;
+        }
+      }
+      
+      td {
+        vertical-align: middle;
+        padding: .3rem;
+        border: 1px solid #dfe6e9;
+        font-size: .8rem;
+  
+        &.groupname {
+          vertical-align: top;
+  
+          .name {
+            font-size: 1rem;
+            font-weight: bold;
+          }
+  
+          .handle {
+            font-size: .8rem;
+          }
+  
+          .description {
+            font-size: .6rem;
+            color: #636e72;
+            margin-top: .3rem;
+          }
+        }
+  
+        &.groupname,
+        &.userHandle,
+        &.userId {
+          cursor: pointer;
+          transition: .3s;
+  
+          &:hover {
+            background-color: #dfe6e9;
+          }
+        }
+  
+        .username {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+  
+          .icon {
+            display: inline-block;
+            position: relative;
+            width: 25px;
+            height: 25px;
+            margin-right: .5rem;
+          }
+        }
+      }
+  
+      thead {
+        tr {
+          th {
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+  
+  @keyframes shake-crazy {
+    10% {
+        transform: translate(4px, 16px) rotate(-8deg);
+        color: #838a8d;
+    }
+  
+    20% {
+        transform: translate(-6px, 20px) rotate(3deg);
+        color: #ca98bb;
+    }
+  
+    30% {
+        transform: translate(-13px, 7px) rotate(-2deg);
+        color: #ca98bb;
+    }
+  
+    40% {
+        transform: translate(17px, -7px) rotate(-5deg);
+        color: #ca98bb;
+    }
+  
+    50% {
+        transform: translate(-13px, 8px) rotate(1deg);
+    }
+  
+    60% {
+        transform: translate(-11px, 10px) rotate(10deg);
+        color: #ca98bb;
+    }
+  
+    70% {
+        transform: translate(-18px, -9px) rotate(1deg);
+        color: #ca98bb;
+    }
+  
+    80% {
+        transform: translate(-1px, 5px) rotate(6deg);
+    }
+  
+    90% {
+        transform: translate(3px, 15px) rotate(-3deg);
+        color: #ca98bb;
+    }
+  
+    0%,100% {
+        transform: translate(0, 0) rotate(0);
+        color: #ca98bb;
+    }
+  }
+
+  @keyframes special {
+
+  }
+  
