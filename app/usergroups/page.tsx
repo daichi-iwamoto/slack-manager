@@ -4,21 +4,17 @@ import { Amplify } from 'aws-amplify';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from '@/src/aws-exports';
+import { format } from "date-fns";
 
 import { UsersListResponse } from "@slack/web-api"
-import { UsergroupsListResponse } from '@/app/api/usergroups/route'
-import type { Usergroup as DefaultUsergroup } from "@slack/web-api/dist/response/UsergroupsListResponse";
 import { useCallback, useEffect, useState } from "react"
-
+import UsergroupsComponent, {
+  UsergroupsProps,
+  UsergroupsUsers,
+  UsergroupDetails
+} from '@/app/components/usergroups';
 
 Amplify.configure(awsExports);
-
-type UsergroupsUsers = DefaultUsergroup & {
-  users?: UsersListResponse["members"]
-}
-type UsergroupDetails = Omit<UsergroupsListResponse, 'usergroups'> & {
-  usergroups: UsergroupsUsers[]
-}
 
 export default function Usergroups() {
   // ユーザーグループ詳細
@@ -27,6 +23,42 @@ export default function Usergroups() {
   const [command, setCommand] = useState<string>("")
   // 特殊コマンド判定
   const [isSpecialMode, setIsSpecialMode] = useState<boolean>(false)
+
+  // CSV出力
+async function createCsv(data: UsergroupDetails["usergroups"]) {
+  const header = [
+    "Group Name",
+    "Group Handle",
+    "User Name",
+    "User Handle",
+    "User ID"
+  ].join(',')
+  const rows = data.map(usergroup => (
+    usergroup.users?.map(user => {
+      const { profile, id } = user
+
+      return [
+        usergroup.name,
+        `@${usergroup.handle}`,
+        profile?.display_name,
+        `@${profile?.display_name}`,
+        id
+      ].join(',')
+    }).join('\n')
+  ))
+
+  const formattedCsvData = [header, ...rows].join('\n')
+
+  const blob = new Blob([formattedCsvData], { type: 'text/csv' })
+  const url = URL.createObjectURL(blob)
+
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `usergroup_${format(new Date(), 'yyyyMMddHHmmss')}.csv`
+  a.click()
+  
+  URL.revokeObjectURL(url)
+}
 
   // ユーザーグループ一覧取得
   const getUserGroups = useCallback(async (): Promise<UsergroupDetails> => {
@@ -90,10 +122,15 @@ export default function Usergroups() {
 
   return (
     <Authenticator hideSignUp>
-      {({ signOut, user }) => (
+      {({ user }) => (
         <main>
-          usergroups page
-          <button onClick={signOut}>Sign out</button>
+          <UsergroupsComponent
+            isSpecialMode={isSpecialMode}
+            usergroupDetails={usergroupDetails}
+            createCsv={createCsv}
+            user={user?.attributes?.email}
+            setSpecialMode={setIsSpecialMode}
+          />
         </main>
       )}
     </Authenticator>
