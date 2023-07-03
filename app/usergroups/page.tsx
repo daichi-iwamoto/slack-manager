@@ -13,7 +13,7 @@ export default function App() {
     <Authenticator hideSignUp>
       {({ signOut, user }) => (
         <main>
-          <h1>Hello {user?.username}</h1>
+          usergroups page
           <button onClick={signOut}>Sign out</button>
         </main>
       )}

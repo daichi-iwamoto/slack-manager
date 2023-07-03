@@ -25,7 +25,7 @@ export default function RootLayout({
         <nav>
           <ul>
             <li>
-              <Link href="/">
+              <Link href="/usergroups">
                 <p>
                   <span>メンショングループの管理</span>
                 </p>
